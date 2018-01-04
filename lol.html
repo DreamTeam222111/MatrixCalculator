@@ -1,0 +1,168 @@
+
+
+
+<html>
+
+	<head>
+		<title>Matrix Calculator</title>
+	</head>
+
+
+
+	<body>
+
+		<!-- CSS portion of the website -->
+		<style>
+
+			body{
+
+				text-align: center;
+				background: #F0F0FF;
+				background: linear-gradient(to bottom right, #88FFD5, #99DDFF);
+
+			}
+
+			table{
+				background: #AADDDD;
+				border-radius: 15px;
+				margin: auto;
+				border-style: ridge;
+				border-color: #BBBBCC;
+				transition-duration: 25s;
+				
+			}
+
+			table:hover{
+				background-color: #DDCCDD;
+				border-color: #8888BB;
+				
+			}
+
+			.button{
+				width: 100px;
+				background-color: #66AAFF;
+				color: #FFFFFF;
+				padding: 2px;
+				text-align: center;
+				text-decoration: none; 
+				border-radius: 2px;
+				border-style: none;
+				transition-duration: 0.7s;
+
+			}
+
+			.button:hover{
+				background-color: #5599EE;
+			}
+
+			.input{
+				width: 105px;
+				padding: 2px;
+				margin: 10px;
+			}
+
+
+		</style>
+		<br>
+
+
+		<!-- Matrix 1 -->
+
+		<h1> Matrix 1 </h1>
+		<input type="number" id="matrixWidth1" class="input" placeholder="Enter Width" oninput="setMatrixSize1('matrixWidth1','matrixLength1')">
+		<input type="number" id="matrixLength1" class="input" placeholder="Enter Length" oninput="setMatrixSize1('matrixWidth1','matrixLength1')">
+		<input type="button" id="initMatrix1" class="button" value="Make Matrix" onclick="initMatrix1('matrixWidth1','matrixLength1')">
+
+		<p id="size">Size of Matrix</p>
+
+		<table id="matrix1"></table><br><br>
+
+		<input type="button" id="addMatrix1" class="button" value="Add Matrix" onclick="addMatrix1('matrixWidth1','matrixLength1')">
+
+		<p id="add">Add of Matrix</p>
+
+		<!-- End of Matrix 1 -->
+
+
+		<!-- JavaScript portion of the website -->
+		<script>
+
+			function setMatrixSize1(id,id2){
+				var x, y, result;
+
+				y = document.getElementById(id).value
+				x = document.getElementById(id2).value
+
+				result = x * y;
+				document.getElementById("size").innerHTML = (result);
+			}
+
+			function initMatrix1(id,id2){
+				var x, y, result;
+
+				y = document.getElementById(id).value
+				x = document.getElementById(id2).value
+
+				
+
+
+				var string = "";
+				var idNum;
+				var matrixId = "";
+				for (var k = 0; k < y; k++){
+					string += "<tr>"
+					for (var i = 0; i < x; i++){
+						matrixId = "Matrix1Id";
+						idNum = (x*k) + i;
+						matrixId += idNum.toString();
+						string += "<td><input id='" + matrixId +  "' type='number' class='input' placeholder='Enter Number' oninput='matrix()'></td>"
+					}
+					string += "</tr>"
+
+				}
+				document.getElementById("matrix1").innerHTML = string;
+				
+			}
+
+			function addMatrix1(id,id2){
+
+				var x, y, result;
+
+				y = document.getElementById(id).value
+				x = document.getElementById(id2).value
+
+				var idNum;
+				var matrixId = "";
+				result = 0;
+				for (var k = 0; k < y; k++){
+
+					for (var i = 0; i < x; i++){
+						matrixId = "Matrix1Id";
+						idNum = (x*k) + i;
+						matrixId += idNum.toString();
+						result += parseFloat(document.getElementById(matrixId).value);
+					}
+
+				}
+
+				if (isNaN(result)){
+					document.getElementById("add").innerHTML = "Please enter a number in all the boxes.";
+				}
+				else{
+					document.getElementById("add").innerHTML = result;
+				}
+				
+
+			}
+
+			
+
+		</script>
+
+
+
+
+
+	</body>
+
+</html>
