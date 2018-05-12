@@ -1,6 +1,3 @@
-
-
-
 <html>
 
 	<head>
@@ -38,7 +35,7 @@
 			}
 
 			table:hover{
-				background-color: #AAAEEC;
+				background-color: #AACCDD;
 				border-color: #8888BB;
 				
 			}
@@ -61,7 +58,7 @@
 			}
 
 			.input{
-				width: 105px;
+				width: 110px;
 				padding: 2px;
 				margin: 10px;
 			}
@@ -73,85 +70,114 @@
 		<!-- Matrix 1 -->
 
 		<h1> Matrix 1 </h1>
-		<input type="number" id="matrixWidth1" class="input" placeholder="Enter Width" oninput="setMatrixSize1('matrixWidth1','matrixLength1')">
-		<input type="number" id="matrixLength1" class="input" placeholder="Enter Length" oninput="setMatrixSize1('matrixWidth1','matrixLength1')">
-		<input type="button" id="initMatrix1" class="button" value="Make Matrix" onclick="initMatrix1('matrixWidth1','matrixLength1')">
+		<input type="number" id="matrixRows1" class="input" placeholder="Enter Rows">
+		<input type="number" id="matrixCols1" class="input" placeholder="Enter Columns">
+		<input type="button" id="initMatrix1" class="button" value="Make Matrix" onclick="initMatrix('matrixRows1','matrixCols1','matrix1','Matrix1Id','size','matrixCols1',0)">
 
 		<p id="size">
 		</p>
 
 		<table id="matrix1"></table><br><br>
 
-		<input type="button" id="addMatrix1" class="button" value="Add Matrix" onclick="addMatrix1('matrixWidth1','matrixLength1')">
+		
 
-		<p id="add">Add Matrix 2</p> <br> <br>
 
 		<!-- End of Matrix 1 -->
 
 		<!-- Matrix 2 -->
 		
+		<span id="spanMatrix2" style="visibility: hidden">
 		<h1> Matrix 2 </h1>
-		<input type="number" id="matrixWidth2" class="input" placeholder="Enter Width " oninput="setMatrixSize2('matrixWidth2','matrixLength2')">
-		<input type="number" id="matrixLength2" class="input" placeholder="Enter Length " oninput="setMatrixSize2('matrixWidth2','matrixLength2')">
-		<input type="button" id="initMatrix2" class="button" value="Make Matrix" onclick="initMatrix2('matrixWidth2','matrixLength2')">
+		<input type="number" id="matrixRows2" class="input" placeholder="Enter Width ">
+		<input type="number" id="matrixCols2" class="input" placeholder="Enter Length ">
+		<input type="button" id="initMatrix2" class="button" value="Make Matrix" onclick="initMatrix('matrixRows2','matrixCols2','matrix2','Matrix2Id','size2','matrixCols1',1)">
 
 		<p id="size2">
 		</p>
 
 		<table id="matrix2"></table><br><br>
 
-		<input type="button" id="addMatrix2" class="button" value="Add Matrix" onclick="addMatrix2('matrixWidth2','matrixLength2')">
+		<input type="button" id="result" class="button" value="Result" onclick="initMatrix('matrixRows1','matrixCols2','matrix3','Matrix3Id','size3','matrixRows1',2);resultMatrix('matrixRows1','matrixCols1','matrixRows2','matrixCols2', 'Matrix1Id','Matrix2Id','Matrix3Id')">
 
-		<p id="add">Add Matrix 2 </p>
+		</span>
 		
 		<!-- End of Matrix 2-->
+
+		<!-- Matrix 3 -->
+		
+
+		<p id="size3">
+		</p>
+		<table id="matrix3"></table><br><br>
+
+		
+		<!-- End of Matrix 3-->
 
 
 		<!-- JavaScript portion of the website -->
 		<script>
 
-			// function setMatrixSize1(id,id2){
-			// 	var x, y, result;
 
-			// 	y = document.getElementById(id).value
-			// 	x = document.getElementById(id2).value
 
-			// 	result = x * y;
-			// 	document.getElementById("size").innerHTML = (result);
-			// }
+			function initMatrix(rows,cols,matrixlocation,entryId,size,cols1,mat2){
 
-			function initMatrix1(id,id2){
-				var x, y, result;
+				var x, y, z, result;
 
-				y = document.getElementById(id).value
-				x = document.getElementById(id2).value
+				//y is rows
+				//x is columns
+				//z is columns of matrix 1 if there is a matrix 1
+
+
+				y = document.getElementById(rows).value
+				x = document.getElementById(cols).value
+				z = document.getElementById(cols1).value
+
+
+
+				if (mat2 == 1){
+
+					if (z != y){
+						document.getElementById(size).innerHTML = ("Columns of matrix 1 not equal to rows of matrix 2, try again");
+						return 0;
+					}
+
+				}
+
 
 				if(x > 10 || y > 10){
 
-					document.getElementById("size").innerHTML = ("Width or length is greater than 10, try again");
+					document.getElementById(size).innerHTML = ("Rows or columns is greater than 10, try again");
 					return 0;
 
 				}
 
 				else if(x < 1 || y < 1) {
 
-					document.getElementById("size").innerHTML = ("Width or length is smaller than 1, try again");
+					document.getElementById(size).innerHTML = ("Rows or columns is smaller than 1, try again");
 					return 0;
 				}
 
 				else {
 
-					document.getElementById("size").innerHTML = " ";
+					document.getElementById(size).innerHTML = " ";
+				}
+
+
+				if (mat2 == 0){
+					document.getElementById("spanMatrix2").style.visibility = "visible";
 				}
 
 
 				var string = "";
 				var idNum;
 				var matrixId = "";
+
 				for (var k = 0; k < y; k++){
+
 					string += "<tr>"
 					for (var i = 0; i < x; i++){
-						matrixId = "Matrix1Id";
+
+						matrixId = entryId;
 						idNum = (x*k) + i;
 						matrixId += idNum.toString();
 						string += "<td><input id='" + matrixId +  "' type='number' class='input' placeholder='Enter Number' oninput='matrix()'></td>"
@@ -159,49 +185,74 @@
 					string += "</tr>"
 
 				}
-				document.getElementById("matrix1").innerHTML = string;
+				document.getElementById(matrixlocation).innerHTML = string;
+
 				
 			}
 
-			function addMatrix1(id,id2){
+		
 
+			function resultMatrix(rowMat1,colMat1,rowMat2,colMat2, entryId1,entryId2,entryId3){
 				var x, y, result;
 
-				y = document.getElementById(id).value
-				x = document.getElementById(id2).value
+				y = document.getElementById(rowMat1).value
+				x = document.getElementById(colMat1).value
+				y2 = document.getElementById(rowMat2).value
+				x2 = document.getElementById(colMat2).value
 
-				var idNum;
-				var matrixId = "";
-				result = 0;
 				for (var k = 0; k < y; k++){
 
-					for (var i = 0; i < x; i++){
-						matrixId = "Matrix1Id";
-						idNum = (x*k) + i;
-						matrixId += idNum.toString();
-						result += parseFloat(document.getElementById(matrixId).value);
+
+
+					for (var i = 0; i < x2; i++){
+
+						var matrix3 = 0;
+						var l = 0;
+
+						for (var j = 0; j < y2; j++){
+
+
+							matrixId1 = entryId1;
+							idNum1 = (x*k) + l;
+							matrixId1 += idNum1.toString();
+							Matrix1 = parseFloat(document.getElementById(matrixId1).value);
+
+							matrixId2 = entryId2;
+
+							idNum2 = (x2*j) + i;
+							matrixId2 += idNum2.toString();
+							Matrix2 = parseFloat(document.getElementById(matrixId2).value);
+							l++;
+
+							matrix3 += (Matrix2 * Matrix1);
+
+						}
+
+
+						matrixId3 = entryId3;
+						idNum3 = (x2*k) + i;
+						matrixId3 += idNum3.toString();
+						document.getElementById(matrixId3).value = (matrix3.toString());
+
 					}
-
 				}
 
-				if (isNaN(result)){
-					document.getElementById("add").innerHTML = "Please enter a number in all the boxes.";
-				}
-				else{
-					document.getElementById("add").innerHTML = result;
-				}
-				
+
 
 			}
+
+					 
+			
+
+
+
+
+				
 
 			
 
 		</script>
 
 
-
-
-
-	</body>
-
+</body>
 </html>
