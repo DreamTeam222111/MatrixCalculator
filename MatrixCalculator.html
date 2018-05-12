@@ -11,9 +11,17 @@
 		<!-- CSS portion of the website -->
 		<style>
 
+			
 			h1{
+
    				 font-size: 40px;
    				 color: #515151;
+			}
+
+			h2{
+				font-size: 60px;
+				color: #606060;
+				margin: auto;
 			}
 
 			body{
@@ -63,9 +71,20 @@
 				margin: 10px;
 			}
 
+			hr { 
+			    display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+			    border-style: inset;
+			    border-width: 2px;
+			}
+
 		</style>
 		<br>
 
+
+		<h2> Matrix Calculator </h2>
+		<br><hr>
 
 		<!-- Matrix 1 -->
 
@@ -137,7 +156,7 @@
 				if (mat2 == 1){
 
 					if (z != y){
-						document.getElementById(size).innerHTML = ("Columns of matrix 1 not equal to rows of matrix 2, try again");
+						document.getElementById(size).innerHTML = ("Columns of matrix 1 is not equal to rows of matrix 2, try again");
 						return 0;
 					}
 
